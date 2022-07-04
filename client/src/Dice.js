@@ -9,6 +9,7 @@ const Dice = (props) => {
   return (
     <div>
       {props.DiceValue > 0 ? (
+        // eslint-disable-next-line jsx-a11y/alt-text
         <img src={dieValue[props.DiceValue - 1]} width="40px" height="40px" />
       ) : null}
     </div>
