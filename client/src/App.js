@@ -7,9 +7,17 @@ import {
   NonExtraMove,
   colorCode,
 } from "./shared/data";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Dice from "./Dice";
 const socket = io("http://localhost:9000");
 function App() {
+  const color = () => {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+
+    return `rgb(${r},${g},${b})`;
+  };
   const [joinedRoom, setJoinedRoom] = useState(false);
   const [roomId, setRoomId] = useState("");
   const [playerNumber, setPlayerNumber] = useState("");
@@ -19,6 +27,7 @@ function App() {
   const [userValue, setUserValue] = useState(1);
   const [userActive, setUserActive] = useState(false);
   const [gameStarted, setGamestarted] = useState(false);
+  const [opponentWon, setOpponentWon] = useState(false);
   const UpdateBoard = (diceValue) => {
     const newBoard = [...boardCell];
     let finalScore = userValue + diceValue;
@@ -34,7 +43,6 @@ function App() {
       let Position = Math.round(
         newBoard.length - score / 10 + (score % 10) / 10 - 1
       );
-      console.log(newBoard[Position]);
       newBoard[Position].find((cell) => cell.id === userValue).player =
         newBoard[Position].find((cell) => cell.id === userValue)?.player.filter(
           (symbol) => symbol !== playerNumber
@@ -90,6 +98,12 @@ function App() {
       });
     }
   };
+  const handleGameWin = () => {
+    if (socket && userValue === 100) {
+      alert("You Won");
+      socket.emit("game_win", true);
+    }
+  };
   const connect = () => {
     socket.on("connect", () => {
       console.log("Connected to The Server");
@@ -100,6 +114,20 @@ function App() {
     handleGameStart();
     handleGameUpdate();
   }, []);
+  useEffect(() => {
+    if (userValue === 0) {
+      handleGameWin();
+      alert("You Won");
+      window.location.reload();
+    }
+    if (socket) {
+      socket.on("on_game_won", (data) => {
+        setOpponentWon(data);
+        alert("Opponent Won");
+        window.location.reload();
+      });
+    }
+  }, [boardCell]);
   return (
     <>
       {joinedRoom ? (
@@ -107,28 +135,52 @@ function App() {
           {!gameStarted ? (
             <div>Waiting for other player to join the room</div>
           ) : (
-            <div>
+            <div style={{ display: "flex" }}>
               <div>
-                <div
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    border: "1px solid black",
-                    borderRadius: "50%",
-                    backgroundColor: colorCode[playerNumber],
-                  }}
-                ></div>
-                <div
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    border: "1px solid black",
-                    borderRadius: "50%",
-                    backgroundColor:
-                      colorCode[(playerNumber + 1) % colorCode.length],
-                  }}
-                >
-                  {console.log((playerNumber + 1) % colorCode.length)}
+                <div style={{ display: "flex", margin: "5px" }}>
+                  <div
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      border: "1px solid black",
+                      borderRadius: "50%",
+                      backgroundColor: colorCode[playerNumber - 1],
+                    }}
+                  ></div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "30px",
+                      marginLeft: "4px",
+                    }}
+                  >
+                    <div>YOU</div>
+                  </div>
+                </div>
+                <div style={{ display: "flex", margin: "5px" }}>
+                  <div
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      border: "1px solid black",
+                      borderRadius: "50%",
+                      backgroundColor:
+                        colorCode[playerNumber % colorCode.length],
+                    }}
+                  ></div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "30px",
+                      marginLeft: "4px",
+                    }}
+                  >
+                    <div>OPPONENT</div>
+                  </div>
                 </div>
               </div>
               <div>
@@ -148,6 +200,7 @@ function App() {
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
+                          backgroundColor: color(),
                         }}
                         key={Cell.id}
                       >
@@ -163,7 +216,9 @@ function App() {
                               border: "1px solid black",
                               borderRadius: "50%",
                               backgroundColor:
-                                colorCode[Cell.player[Cell.player.length - 1]],
+                                colorCode[
+                                  Cell.player[Cell.player.length - 1] - 1
+                                ],
                             }}
                           ></div>
                         ) : null}
@@ -210,6 +265,7 @@ function App() {
         >
           <h4> Room ID </h4>
           <input
+           type="number"
             onChange={(e) => setRoomId(e.target.value)}
             required
             value={roomId}

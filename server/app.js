@@ -4,9 +4,9 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-
+const register = require("./auth/register");
+const signin = require("./auth/signin");
+const verifyToken = require("./auth/verify");
 var app = express();
 app.use(cors());
 // view engine setup
@@ -18,10 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-
+app.post("/auth/register", register);
+app.post("/auth/signin", signin);
+app.get("/auth/verify", verifyToken);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
