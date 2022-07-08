@@ -440,7 +440,7 @@ export const BoardCell = [
     },
   ],
 ];
-export const colorCode = ["red", "green"];
+export const colorCode = ["#dc3545", "#198754"];
 export const LadderAndSnakes = [
   {
     cell: 4,
