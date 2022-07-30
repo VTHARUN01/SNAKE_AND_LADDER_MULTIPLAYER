@@ -1,5 +1,5 @@
 import React from "react";
-import cfi from "../images/cfi.png";
+
 import "./Footer.css";
 const Footer = () => {
   return (
@@ -13,9 +13,40 @@ const Footer = () => {
         }}
       >
         <h1 className="h6 text-center text-danger mx-2 text-white">
-          Developed by Students of WebOps And Blockchain Club IIT Madras
+          Developed by
+          <a
+            className="mx-1"
+            style={{ textDecoration: "none", color: "inherit" }}
+            href="mailto:v.tharun2589@gmail.com"
+          >
+            Tharun.V
+          </a>
+          ,
+          <a
+            className="mx-1"
+            style={{ textDecoration: "none", color: "inherit" }}
+            href="mailto:dheeraj.s.kumar14@gmail.com"
+          >
+            Dheeraj Kumar
+          </a>
+          and
+          <a
+            className="mx-1"
+            style={{ textDecoration: "none", color: "inherit" }}
+            href="mailto:gudipudirasagnya@gmail.com"
+          >
+            Rasagnya
+          </a>
+          of
+          <a
+            className="mx-1"
+            style={{ textDecoration: "none", color: "inherit" }}
+            href="mailto:webopsandblockchainclub@gmail.com"
+          >
+            WebOps And Blockchain Club
+          </a>
+          , CFI
         </h1>
-        <img src={cfi} width="50px" alt="CFI" />
       </div>
     </div>
   );

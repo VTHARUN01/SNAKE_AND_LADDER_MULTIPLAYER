@@ -10,7 +10,14 @@ const GameSpace = (props) => {
           <div className="loader"></div>
         </div>
       ) : (
-        <div style={{ display: "flex" }} className="mt-5">
+        <div
+          style={{
+            display: "flex",
+            height: "calc(100vh - 80px)",
+            justifyContent: "center",
+          }}
+          className="mt-2"
+        >
           <div>
             <div style={{ display: "flex", margin: "5px" }}>
               <div

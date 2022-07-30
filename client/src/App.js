@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import Room from "./Room/Room";
 import GameSpace from "./GameSpace/GameSpace";
 import Footer from "./footer/Footer";
+import Header from "./header/Header";
 import {
   BoardCell,
   LadderAndSnakes,
@@ -121,6 +122,7 @@ function App() {
 
   return (
     <>
+      <Header />
       {joinedRoom ? (
         <GameSpace
           gameStarted={gameStarted}
