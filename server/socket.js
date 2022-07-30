@@ -36,13 +36,6 @@ module.exports = (httpsServer) => {
       const gameRoom = socketRooms && socketRooms[0];
       socket.to(gameRoom).emit("on_game_update", message);
     });
-    socket.on("game_win", (data) => {
-      const socketRooms = Array.from(socket.rooms.values()).filter(
-        (r) => r !== socket.id
-      );
-      const gameRoom = socketRooms && socketRooms[0];
-      socket.to(gameRoom).emit("on_game_won", data);
-    });
   });
 
   return io;

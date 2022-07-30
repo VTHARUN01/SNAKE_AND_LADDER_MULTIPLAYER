@@ -1,8 +1,10 @@
 import "./Room.css";
-
+import snake from "../images/SnakeNLadder.jpg";
+import cfi from "../images/cfi.png";
 const Room = (props) => {
   return (
     <div className="outer_div">
+      <img className="face" src={snake} alt="dice" />
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -18,6 +20,9 @@ const Room = (props) => {
           }
         }}
       >
+        <div className="mb-5 text-center">
+          <h1 className="h2 text-center text-danger">Snake And Ladder</h1>
+        </div>
         <h4 className="text-center text-primary"> Room ID </h4>
         <input
           className="my-3 form-control"
@@ -26,6 +31,20 @@ const Room = (props) => {
           value={props.roomId}
         />
         <button className="btn btn-primary">Join Room</button>
+
+        <div
+          className="mt-5 text-center"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h1 className="h6 text-center text-danger mx-2">
+            WebOps And Blockchain Club IIT Madras
+          </h1>
+          <img src={cfi} width="50px" alt="CFI" />
+        </div>
       </form>
     </div>
   );

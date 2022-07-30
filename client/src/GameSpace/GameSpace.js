@@ -88,7 +88,7 @@ const GameSpace = (props) => {
                 </button>
               ) : (
                 <div className="mt-3">
-                <h6 className="mb-2 text-primary">Waiting</h6>
+                  <h6 className="mb-2 text-primary">Waiting</h6>
                   <div
                     className="loader"
                     style={{ width: "20px", height: "20px" }}
@@ -102,7 +102,7 @@ const GameSpace = (props) => {
               <div
                 style={{
                   display: "flex",
-                  marginLeft:"4px"
+                  marginLeft: "4px",
                 }}
                 key={index}
               >
@@ -118,14 +118,16 @@ const GameSpace = (props) => {
                       alignItems: "center",
                       fontSize: "10px",
                       color: "#198754",
-                      fontWeight:"700"
+                      fontWeight: "700",
                     }}
                     key={Cell.id}
                   >
                     <div>
                       {Cell.id}
                       {Cell?.move ? (
-                        <span style={{color:"#dc3545"}}>-&gt;{Cell?.move}</span>
+                        <span style={{ color: "#dc3545" }}>
+                          -&gt;{Cell?.move}
+                        </span>
                       ) : null}
                     </div>
                     {Cell.player.length !== 0 ? (

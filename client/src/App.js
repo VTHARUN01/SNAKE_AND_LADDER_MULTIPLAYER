@@ -20,38 +20,47 @@ function App() {
   const [userActive, setUserActive] = useState(false);
   const [gameStarted, setGamestarted] = useState(false);
   const DiceRoll = () => Math.floor(Math.random() * 6) + 1;
+
   const UpdateBoard = (diceValue) => {
     const newBoard = [...boardCell];
     let finalScore = userValue + diceValue;
     let finalMove = LadderAndSnakes.find((key) => key.cell === finalScore);
+
     if (finalMove) {
       finalScore = finalMove.move;
     }
+
     if (userActive) {
       let score = userValue;
       if (userValue % 10 === 0) {
         score--;
       }
+      //To access postion in board
       let Position = Math.round(
         newBoard.length - score / 10 + (score % 10) / 10 - 1
       );
+      // To filter the previous position
       newBoard[Position].find((cell) => cell.id === userValue).player =
         newBoard[Position].find((cell) => cell.id === userValue)?.player.filter(
           (symbol) => symbol !== playerNumber
         );
+      //Set value to finall score
       setUserValue(finalScore);
       let Score = finalScore;
       if (finalScore % 10 === 0) {
         Score--;
       }
-      let sosition = Math.round(
+
+      //finding postion
+      let position = Math.round(
         newBoard.length - Score / 10 + (Score % 10) / 10 - 1
       );
-      newBoard[sosition]
+
+      //Adding player to new poistion
+      newBoard[position]
         .find((cell) => cell.id === finalScore)
         .player.push(playerNumber);
-      console.log(newBoard[Position]);
-
+      //Setting new Board
       setBoardCell(newBoard);
       if (NonExtraMove.includes(diceValue)) {
         setUserActive(false);
@@ -64,14 +73,22 @@ function App() {
       socket.emit("update_game", {
         newBoard,
         diceroll: diceValue,
-        Opponentvalue: finalScore,
       });
+      if (finalScore === 100 && userActive) {
+        alert("You Won!!!");
+        window.location.reload();
+      }
     }
   };
+
   const handleGameUpdate = () => {
     if (socket) {
       socket.on("on_game_update", (data) => {
         setBoardCell(data.newBoard);
+        if (data.newBoard[0][0].player.length > 0) {
+          alert("You lost!!!");
+          window.location.reload();
+        }
         if (ExtraMove.includes(data.diceroll)) {
           setUserActive(false);
         }
