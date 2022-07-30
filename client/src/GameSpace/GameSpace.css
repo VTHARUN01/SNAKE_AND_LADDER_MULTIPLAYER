@@ -9,6 +9,16 @@
     animation: spin 2s linear infinite;
 }
 
+.gamspaceDiv {
+    width: 100vw;
+    height: calc(100vh - 72px);
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

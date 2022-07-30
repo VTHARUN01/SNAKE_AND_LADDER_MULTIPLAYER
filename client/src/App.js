@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import Room from "./Room/Room";
 import GameSpace from "./GameSpace/GameSpace";
+import Footer from "./footer/Footer";
 import {
   BoardCell,
   LadderAndSnakes,
@@ -139,6 +140,7 @@ function App() {
           setRoomId={setRoomId}
         />
       )}
+      <Footer />
     </>
   );
 }

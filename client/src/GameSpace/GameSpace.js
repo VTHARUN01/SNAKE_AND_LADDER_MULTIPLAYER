@@ -1,3 +1,4 @@
+import { CallTracker } from "assert";
 import Dice from "../Dice/Dice";
 import { colorCode } from "../shared/data";
 import "./GameSpace.css";
@@ -5,17 +6,7 @@ const GameSpace = (props) => {
   return (
     <>
       {!props.gameStarted ? (
-        <div
-          style={{
-            width: "100vw",
-            height: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-          className="text-primary"
-        >
+        <div className="text-primary gamspaceDiv">
           <h4 className="my-5"> Waiting for other player to join the room</h4>
           <div className="loader"></div>
         </div>

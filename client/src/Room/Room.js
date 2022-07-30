@@ -1,6 +1,6 @@
 import "./Room.css";
 import snake from "../images/SnakeNLadder.jpg";
-import cfi from "../images/cfi.png";
+
 const Room = (props) => {
   return (
     <div className="outer_div">
@@ -32,19 +32,7 @@ const Room = (props) => {
         />
         <button className="btn btn-primary">Join Room</button>
 
-        <div
-          className="mt-5 text-center"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <h1 className="h6 text-center text-danger mx-2">
-            WebOps And Blockchain Club IIT Madras
-          </h1>
-          <img src={cfi} width="50px" alt="CFI" />
-        </div>
+        
       </form>
     </div>
   );
